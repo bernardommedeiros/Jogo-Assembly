@@ -1,7 +1,7 @@
 .text
-.globl criarNpc2, forRestaurar2
-criarNpc2:
-	
+.globl criarPlayer, forRestaurar2
+criarPlayer:
+	ori $14, $0, 0x000000 #chifre
         ori $15, $0, 0xD1C0A6 #chifre
  	ori $16, $0, 0x7EBF3F #npc - corpo
  	ori $17, $0, 0xFDFFFD  #npc - olho e sorriso
@@ -13,7 +13,7 @@ criarNpc2:
 	lui $8, 0x1001
 	addi $8, $8, 29716 # pos inicial
 	add $8, $8, $4
-designNpc2:
+designPlayer:
 #pes 8 pixels - 1 altura
 sw $16, 0($8)
 sw $16, 4($8)
@@ -237,47 +237,47 @@ forRestaurar2:
 	addi $sp, $sp, -4
 	sw $21, 0($sp) #stack point 29 - salva o reg 21 na pilha
 	addi $sp, $sp, -4
-#Essas instruÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes salvam os registradores 8, 9, 10, 11, 12, 13, 14, 15, 21 e 31 na pilha. O ponteiro da pilha ($sp) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â© decrementado para armazenar cada registrador.
+#Essas instruÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âµes salvam os registradores 8, 9, 10, 11, 12, 13, 14, 15, 21 e 31 na pilha. O ponteiro da pilha ($sp) ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© decrementado para armazenar cada registrador.
 	
 	lui $8, 0x1001
-	add $8, $8, $4 #$4 canto inferior esq do npc # Adiciona o valor de $4 a $8 para definir a posiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o inicial
+	add $8, $8, $4 #$4 canto inferior esq do npc # Adiciona o valor de $4 a $8 para definir a posiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o inicial
 	
 	lui $9 0x1001 #copia
-	add $9, $9, $4 # Adiciona o valor de $4 a $9 para definir a posiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o inicial da cÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³pia
+	add $9, $9, $4 # Adiciona o valor de $4 a $9 para definir a posiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o inicial da cÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³pia
 	addi $9, $9, 32768# Adiciona um offset de 32768 a $9
 	
-	addi $10, $0, 40 #linhas a serem copiadas
+	addi $10, $0, 15 #linhas a serem copiadas
 	addi $11, $0, 0 #contador das linhas - pra cima 
-	addi $12, $0, 24 #numero de pixels para copiar em cada linha
+	addi $12, $0, 15 #numero de pixels para copiar em cada linha
 	addi $13, $0, 0 #contador de pixels - para o lado
 	
-forColuna2: #percorre as linhas, copiando colunas de pixels de uma regiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o de memÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ria para outra.
+forColuna2: #percorre as linhas, copiando colunas de pixels de uma regiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o de memÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ria para outra.
 
-	beq $11, $10, retornoRest2 # Se $11 (contador de linhas) alcanÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ar $10, sai do loop
+	beq $11, $10, retornoRest2 # Se $11 (contador de linhas) alcanÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ar $10, sai do loop
 	
-	add $14, $0, $8 # Guarda o endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o inicial de $8 em $14
-	add $15, $0, $9 # Guarda o endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o inicial de $9 em $15
-	forLinha2:  #percorre os pixels em cada linha, copiando-os de um endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o para outro.
-	beq $12, $13, prxColuna2  # Se $13 (contador de pixels) alcanÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ar $12, vai para a prÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³xima coluna
-	lw $21, 0($9) # Carrega o pixel do endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o $9 para $21
+	add $14, $0, $8 # Guarda o endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o inicial de $8 em $14
+	add $15, $0, $9 # Guarda o endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o inicial de $9 em $15
+	forLinha2:  #percorre os pixels em cada linha, copiando-os de um endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o para outro.
+	beq $12, $13, prxColuna2  # Se $13 (contador de pixels) alcanÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ar $12, vai para a prÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³xima coluna
+	lw $21, 0($9) # Carrega o pixel do endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o $9 para $21
 	
-	sw $21, 0($8) # Armazena o pixel do $21 no endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o $8
+	sw $21, 0($8) # Armazena o pixel do $21 no endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o $8
 	
-	addi $8, $8, 4 #AvanÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§a para o prÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ximo pixel em $8
-	addi $9, $9, 4 #AvanÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§a para o prÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ximo pixel em $9 (copia)
+	addi $8, $8, 4 #AvanÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§a para o prÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ximo pixel em $8
+	addi $9, $9, 4 #AvanÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§a para o prÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ximo pixel em $9 (copia)
 	
 	addi $13, $13, 1 # Incrementa o contador de pixels
 	
 	j forLinha2
 	
-prxColuna2: #Ajusta os endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§os para a prÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³xima linha e reseta o contador de pixels
+prxColuna2: #Ajusta os endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§os para a prÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³xima linha e reseta o contador de pixels
 	addi $13, $0, 0 # Reseta o contador de pixels
-	addi $9, $15, -512 # Ajusta o endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o de $9 para a prÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³xima linha
-	addi $8, $14, -512 # Ajusta o endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o de $8 para a prÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³xima linha
+	addi $9, $15, -512 # Ajusta o endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o de $9 para a prÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³xima linha
+	addi $8, $14, -512 # Ajusta o endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o de $8 para a prÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³xima linha
 	addi $11, $11, 1 #Incrementa o contador de linhas
 	
 	j forColuna2
-retornoRest2: #Essas instruÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âµes restauram os registradores da pilha e retornam ao endereÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o salvo em $31.
+retornoRest2: #Essas instruÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âµes restauram os registradores da pilha e retornam ao endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o salvo em $31.
 	add $sp, $sp, 4
 	lw $21, 0($sp)
 	
