@@ -1,12 +1,12 @@
 .text
 .globl criarPlayer, forRestaurar2
 criarPlayer:
-	ori $14, $0, 0x000000 #chifre
+	ori $14, $0, 0x000000 #olho e contorno arma
         ori $15, $0, 0xD1C0A6 #chifre
  	ori $16, $0, 0x7EBF3F #npc - corpo
  	ori $17, $0, 0xFDFFFD  #npc - olho e sorriso
 	ori $22, $0, 0x32679A #npc - olho azul
-
+	ori $23, $0, 0xCCCCCC #arma
 	#reg 23, 24, 14 sem uso
 
 	
@@ -214,6 +214,74 @@ sw $16, -2572($8)
 sw $16, -4560($8)  
 sw $16, -4556($8)
 sw $16, -4552($8)
+
+#arma 
+#contorno
+sw $14, -6052($8)
+sw $14, -5544($8)
+sw $14, -6056($8)
+sw $14, -6568($8)
+sw $14, -7080($8)
+sw $14, -7084($8)
+sw $14, -7088($8)
+sw $14, -7092($8)
+sw $14, -7096($8)
+sw $14, -7100($8)
+#detalhe
+sw $14, -7612($8)
+sw $14, -7616($8)
+sw $14, -8128($8)
+
+sw $14, -7104($8)
+sw $14, -7108($8)
+sw $14, -6596($8)
+sw $14, -6084($8)
+sw $14, -5572($8)
+sw $14, -5060($8)
+sw $14, -4548($8)
+sw $14, -4036($8)
+sw $14, -3524($8)
+sw $14, -3520($8)
+sw $14, -3516($8)
+sw $14, -3512($8)
+sw $14, -4024($8)
+sw $14, -4536($8)
+sw $14, -5048($8)
+sw $14, -5044($8)
+sw $14, -5040($8)
+sw $14, -5036($8)
+sw $14, -5032($8)
+
+
+sw $14, -5564($8)
+sw $14, -5568($8)
+
+#dentro
+sw $23, -6572($8)
+sw $23, -6576($8)
+sw $23, -6580($8)
+sw $23, -6584($8)
+sw $23, -6588($8)
+sw $23, -6592($8)
+
+sw $23, -6060($8)
+sw $23, -6064($8)
+sw $23, -6068($8)
+sw $23, -6072($8)
+sw $23, -6076($8)
+sw $23, -6080($8)
+
+sw $23, -5548($8)
+sw $23, -5552($8)
+sw $23, -5556($8)
+sw $23, -5560($8)
+
+sw $23, -5052($8)
+sw $23, -5056($8)
+sw $23, -4540($8)
+sw $23, -4544($8)
+sw $23, -4028($8)
+sw $23, -4032($8)
 jr $31
 
 forRestaurar2:
@@ -246,9 +314,9 @@ forRestaurar2:
 	add $9, $9, $4 # Adiciona o valor de $4 a $9 para definir a posiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o inicial da cÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³pia
 	addi $9, $9, 32768# Adiciona um offset de 32768 a $9
 	
-	addi $10, $0, 15 #linhas a serem copiadas
+	addi $10, $0, 40 #linhas a serem copiadas
 	addi $11, $0, 0 #contador das linhas - pra cima 
-	addi $12, $0, 15 #numero de pixels para copiar em cada linha
+	addi $12, $0, 24 #numero de pixels para copiar em cada linha
 	addi $13, $0, 0 #contador de pixels - para o lado
 	
 forColuna2: #percorre as linhas, copiando colunas de pixels de uma regiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o de memÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ria para outra.
