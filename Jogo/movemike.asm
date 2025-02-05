@@ -20,7 +20,7 @@ forMovePlayer:
 
     # Verifica se a tecla "D" (direita) foi pressionada
     li $8, 100             # Código ASCII para "D"
-    beq $v0, $t0, moverPlayerDireita
+    beq $2, $8, moverPlayerDireita
 
     j fimMovePlayer         # Se nenhuma tecla válida for pressionada, sai da função
 
