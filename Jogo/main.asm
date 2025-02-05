@@ -10,11 +10,8 @@ main:
     addi $4, $0, 0
     jal criarNpc
     
-    
+  
     jal criarPlayer
-    # inicializa a posição do player
-    addi $25, $0, 0  # $25 armazena a posição do player
-    
 forMovenpc:
     add $4, $25, 30632
     jal forRestaurar
@@ -28,12 +25,13 @@ forMovenpc:
     
     
     addi $25, $25, -4
-    add $4, $0, $25
-    jal criarPlayer
-    
-    
+   
     jal timer
     j forMovenpc
+    
+forMoveplayer:
+	add $4, $25, 30220
+	jal criarPlayer
     
  
 timer: sw $16, 0($29)
