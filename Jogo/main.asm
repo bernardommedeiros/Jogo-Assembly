@@ -1,9 +1,9 @@
 .text
 main:
-    # Cenário da tela
+    # CenÃ¡rio da tela
     jal criarCenario
     
-    # Cópia do cenário
+    # CÃ³pia do cenÃ¡rio
     addi $4, $0, 32768
     jal criarCenario
     
@@ -14,11 +14,11 @@ main:
     # Cria o player
     jal criarPlayer
 
-    # Inicializa a posição do player
-    addi $25, $0, 0  # $25 armazena a posição do player
+    # Inicializa a posiÃ§Ã£o do player
+    addi $25, $0, 0  # $25 armazena a posiÃ§Ã£o do player
 
-loopPrincipal:
-    # Movimentação do NPC (função existente)
+loopNpc:
+    # MovimentaÃ§Ã£o do NPC (funÃ§Ã£o existente)
     add $4, $25, 30632
     jal forRestaurar
     
@@ -28,13 +28,27 @@ loopPrincipal:
     
     jal timer
 
-    # Movimentação do player (nova função)
-    jal forMovePlayer
+    # MovimentaÃ§Ã£o do player (nova funÃ§Ã£o)
+ 
+    j loopNpc
+    
+loopPlayer:
+    add $4, $25, 30632
+    jal forRestaurar2
+    
+    addi $25, $25, 4 #beq esq
+    add $4, $0, $25
+    jal criarPlayer
+    
+    jal timer
+    
+    j loopPlayer
+    
+	
+               
+    
 
-
-    j loopPrincipal
-
-# Função de delay 
+# FunÃ§Ã£o de delay 
 timer:
     sw $16, 0($29)
     addi $29, $29, -4
