@@ -11,36 +11,45 @@ forMovePlayer:
     sw $10, 0($sp)          # Salva $10
     addi $sp, $sp, -4
 
-    # Lê a tecla pressionada
-    jal lerTecla            # Função que retorna a tecla em $v0
-
+    lui $11, 0xffff
+    lw $12, 0($11)
+    beq $12, $0, fimMovePlayer
+    lw $12, 4($11) #verifica se houve leitura do teclado
+    
     # Verifica se a tecla "A" (esquerda) foi pressionada
     li $8, 97              # Código ASCII para "A"
-    beq $2, $8, moverPlayerEsquerda
+    beq $12, $8, movePlayerEsquerda
 
     # Verifica se a tecla "D" (direita) foi pressionada
     li $8, 100             # Código ASCII para "D"
-    beq $2, $8, moverPlayerDireita
+    beq $12, $8, movePlayerDireita
 
     j fimMovePlayer         # Se nenhuma tecla válida for pressionada, sai da função
 
-moverPlayerEsquerda:
+movePlayerEsquerda:
+    jal forPlayerEsq
+  
+    bne $3, $0, fimMovePlayer
+    
+    add $4, $25, 0
+    jal forRestaurar2
     addi $25, $25, -4       # Move o player 4 pixels para a esquerda
-    j atualizarPlayerPos
-
-moverPlayerDireita:
+    add $4, $25, 0
+    jal criarPlayer
+    
+    j fimMovePlayer
+    
+movePlayerDireita:
+    jal forNpcArma
+    bne $3, $0, fimMovePlayer
+    add $4, $25, 0
+    jal forRestaurar2
     addi $25, $25, 4        # Move o player 4 pixels para a direita
-    j atualizarPlayerPos
-
-atualizarPlayerPos:
-    # Restaura o cenário na posição anterior do player
-    add $4, $25, 30632      # Define a posição para restaurar
-    jal forRestaurar2       # Função para restaurar o cenário
-
-    # Redesenha o player na nova posição
-    add $4, $0, $25         # Passa a nova posição para $4
-    jal criarPlayer         # Redesenha o player
-
+    add $4, $25, 0
+    jal criarPlayer
+    
+    j fimMovePlayer
+    
 fimMovePlayer:
     # Restaura os registradores da pilha
     addi $sp, $sp, 4
@@ -54,8 +63,5 @@ fimMovePlayer:
 
     jr $31                  # Retorna ao chamador
 
-# Função para ler a tecla pressionada (exemplo)
-lerTecla:
-    li $2, 12              # Syscall para ler um caractere
     syscall
-    jr $31                  # Retorna o código da tecla em $v0
+    jr $31                 
