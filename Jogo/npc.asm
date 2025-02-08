@@ -1,6 +1,25 @@
 .text
 .globl criarNpc, forRestaurar
 criarNpc:
+
+	sw $31, 0($sp)          # Salva o endereço de retorno
+    	addi $sp, $sp, -4
+        sw $14, 0($sp)           # Salva $8
+    	addi $sp, $sp, -4
+    	sw $15, 0($sp)           # Salva $9
+    	addi $sp, $sp, -4
+    	sw $16, 0($sp)          # Salva $10
+    	addi $sp, $sp, -4
+    	sw $17, 0($sp)          # Salva o endereço de retorno
+    	addi $sp, $sp, -4
+        sw $22, 0($sp)           # Salva $8
+    	addi $sp, $sp, -4
+    	sw $23, 0($sp)           # Salva $9
+    	addi $sp, $sp, -4
+    	sw $24, 0($sp)          # Salva $10
+    	addi $sp, $sp, -4
+    
+
 	ori $14, $0, 0xf85da6 #npc - rosa antena
         ori $15, $0, 0x3D2F58 #npc - detalhes escuros
  	ori $16, $0, 0x674E9A #npc - corpo
@@ -11,8 +30,9 @@ criarNpc:
 
 	
 	lui $8, 0x1001
-	addi $8, $8, 30120 # pos inicial
+
 	add $8, $8, $4
+	
 designNpc:
 #pÃƒÆ’Ã‚Â© esquerdo
 	sw $16, 0($8)
@@ -523,6 +543,24 @@ sw $15, -17868($8)#5
 sw $14, -18376($8)#5
 sw $14, -18884($8)#5
 
+    addi $sp, $sp, 4
+    lw $24, 0($sp)
+    addi $sp, $sp, 4
+    lw $23, 0($sp)
+    addi $sp, $sp, 4
+    lw $22, 0($sp)
+    addi $sp, $sp, 4
+    lw $17, 0($sp)
+    addi $sp, $sp, 4
+    lw $16, 0($sp)
+    addi $sp, $sp, 4
+    lw $15, 0($sp)
+    addi $sp, $sp, 4
+    lw $14, 0($sp)
+    addi $sp, $sp, 4
+    lw $31, 0($sp)
+    addi $sp, $sp, 4
+    
 jr $31
 
 forRestaurar:
@@ -545,6 +583,8 @@ forRestaurar:
 	sw $15, 0($sp) #stack point 29 - salva o reg 15 na pilha
 	addi $sp, $sp, -4
 	sw $21, 0($sp) #stack point 29 - salva o reg 21 na pilha
+	addi $sp, $sp, -4
+	sw $23, 0($sp) #stack point 29 - salva o reg 23 na pilha
 	addi $sp, $sp, -4
 #Essas instruÃ§Ãµes salvam os registradores 8, 9, 10, 11, 12, 13, 14, 15, 21 e 31 na pilha. O ponteiro da pilha ($sp) Ã© decrementado para armazenar cada registrador.
 	
@@ -587,6 +627,10 @@ prxColuna: #Ajusta os endereÃ§os para a prÃ³xima linha e reseta o contador d
 	
 	j forColuna
 retornoRest: #Essas instruÃ§Ãµes restauram os registradores da pilha e retornam ao endereÃ§o salvo em $31.
+	
+	add $sp, $sp, 4
+	lw $23, 0($sp)
+	
 	add $sp, $sp, 4
 	lw $21, 0($sp)
 	
@@ -616,6 +660,7 @@ retornoRest: #Essas instruÃ§Ãµes restauram os registradores da pilha e retor
 	
 	add $sp, $sp, 4
 	lw $31, 0($sp)
+	
 	jr $31
 	
 fim:	
