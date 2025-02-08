@@ -1,11 +1,3 @@
-#loopPlayer:
- #   add $4, $25, 30632
- #   jal forRestaurar2
-    
-  #  addi $25, $25, 4 #beq esq
-   # add $4, $0, $25
-   # jal criarPlayer
-    
 .text
 main:
     # cenario da tela
@@ -15,26 +7,37 @@ main:
     addi $4, $0, 32768
     jal criarCenario
     
-    addi $4, $0, 0
+    addi $4, $0, 30120
     jal criarNpc
+    add $24, $0, 30120
+    addi $4, $0, 29716 # pos inicial
+    jal criarPlayer
+    add $25, $0, 29716
     
-forLoop:
-    add $4, $25, 30632
+forMovenpc:
+    jal forNpcArma
+    bne $3, $0, posColisao
+    add $4, $24, 512
     jal forRestaurar
     
-    addi $25, $25, -4
-    add $4, $0, $25
+    addi $24, $24, -4
+    add $4, $0, $24
     jal criarNpc
     
-       jal timer
-    j forLoop
+    posColisao:
+  
+    jal timer
+    jal forMovePlayer
+    j forMovenpc
+    
+fimMoveNpc:
+	jr $31
     
     
     
- 
 timer: sw $16, 0($29)
        addi $29, $29, -4
-       addi $16, $0, 50000
+       addi $16, $0, 5000
 forT:  beq $16, $0, fimT
        nop
        nop
