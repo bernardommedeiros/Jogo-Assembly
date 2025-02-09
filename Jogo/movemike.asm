@@ -4,17 +4,20 @@ forMovePlayer:
     # Salva os registradores na pilha
     sw $31, 0($sp)          # Salva o endereço de retorno
     addi $sp, $sp, -4
+    
     sw $8, 0($sp)           # Salva $8
     addi $sp, $sp, -4
+    
     sw $9, 0($sp)           # Salva $9
     addi $sp, $sp, -4
+    
     sw $10, 0($sp)          # Salva $10
     addi $sp, $sp, -4
 
     lui $11, 0xffff
-    lw $12, 0($11)
+    lw $12, 0($11) #verifica se houve mudanca no buffer
     beq $12, $0, fimMovePlayer
-    lw $12, 4($11) #verifica se houve leitura do teclado
+    lw $12, 4($11) #pega se a tecla correta
     
     # Verifica se a tecla "A" (esquerda) foi pressionada
     li $8, 97              # Código ASCII para "A"
