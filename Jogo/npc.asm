@@ -4,21 +4,27 @@ criarNpc:
 
 	sw $31, 0($sp)          # Salva o endereço de retorno
     	addi $sp, $sp, -4
+    	
         sw $14, 0($sp)           # Salva $8
     	addi $sp, $sp, -4
+    	
     	sw $15, 0($sp)           # Salva $9
     	addi $sp, $sp, -4
+    	
     	sw $16, 0($sp)          # Salva $10
     	addi $sp, $sp, -4
+    	
     	sw $17, 0($sp)          # Salva o endereço de retorno
     	addi $sp, $sp, -4
+    	
         sw $22, 0($sp)           # Salva $8
     	addi $sp, $sp, -4
+    	
     	sw $23, 0($sp)           # Salva $9
     	addi $sp, $sp, -4
+    	
     	sw $24, 0($sp)          # Salva $10
     	addi $sp, $sp, -4
-    
 
 	ori $14, $0, 0xf85da6 #npc - rosa antena
         ori $15, $0, 0x3D2F58 #npc - detalhes escuros
@@ -586,6 +592,7 @@ forRestaurar:
 	addi $sp, $sp, -4
 	sw $23, 0($sp) #stack point 29 - salva o reg 23 na pilha
 	addi $sp, $sp, -4
+	
 #Essas instruÃ§Ãµes salvam os registradores 8, 9, 10, 11, 12, 13, 14, 15, 21 e 31 na pilha. O ponteiro da pilha ($sp) Ã© decrementado para armazenar cada registrador.
 	
 	lui $8, 0x1001
@@ -597,7 +604,7 @@ forRestaurar:
 	
 	addi $10, $0, 40 #linhas a serem copiadas
 	addi $11, $0, 0 #contador das linhas - pra cima 
-	addi $12, $0, 24 #numero de pixels para copiar em cada linha
+	addi $12, $0, 21 #numero de pixels para copiar em cada linha
 	addi $13, $0, 0 #contador de pixels - para o lado
 	
 forColuna: #percorre as linhas, copiando colunas de pixels de uma regiÃ£o de memÃ³ria para outra.
