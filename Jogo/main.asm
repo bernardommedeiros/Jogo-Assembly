@@ -14,7 +14,9 @@ main:
     jal criarPlayer
     add $25, $0, 29716
     
-forMovenpc:
+    
+    addi $23, $0, 0
+forPrincipal:
     jal forNpcArma
     bne $3, $0, posColisao
     add $4, $24, 512
@@ -27,17 +29,19 @@ forMovenpc:
     posColisao:
   
     jal timer
+    jal forTiro
     jal forMovePlayer
-    j forMovenpc
+   
+    j forPrincipal
     
-fimMoveNpc:
+fimforPrincipal:
 	jr $31
     
     
     
 timer: sw $16, 0($29)
        addi $29, $29, -4
-       addi $16, $0, 5000
+       addi $16, $0, 50000
 forT:  beq $16, $0, fimT
        nop
        nop
