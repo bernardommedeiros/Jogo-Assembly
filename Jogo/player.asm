@@ -1,6 +1,29 @@
 .text
 .globl criarPlayer, forRestaurar2
 criarPlayer:
+
+	sw $31, 0($sp) #stack point 29 - salva o reg 31 na pilha
+	addi $sp, $sp, -4
+	
+	sw $14, 0($sp) #stack point 29 - salva o reg 8 na pilha
+	addi $sp, $sp, -4
+	
+	sw $15, 0($sp) #stack point 29 - salva o reg 9 na pilha
+	addi $sp, $sp, -4
+	
+	sw $16, 0($sp) #stack point 29 - salva o reg 10 na pilha
+	addi $sp, $sp, -4
+	
+	sw $17, 0($sp) #stack point 29 - salva o reg 11 na pilha
+	addi $sp, $sp, -4
+	
+	sw $22, 0($sp) #stack point 29 - salva o reg 12 na pilha
+	addi $sp, $sp, -4
+	
+	sw $23, 0($sp) #stack point 29 - salva o reg 13 na pilha
+	addi $sp, $sp, -4
+	
+	
 	ori $14, $0, 0x000000 #olho e contorno arma
         ori $15, $0, 0xD1C0A6 #chifre
  	ori $16, $0, 0x7EBF3F #npc - corpo
@@ -11,8 +34,9 @@ criarPlayer:
 
 	
 	lui $8, 0x1001
-	addi $8, $8, 29716 # pos inicial
+	
 	add $8, $8, $4
+	
 designPlayer:
 #pes 8 pixels - 1 altura
 sw $16, 0($8)
@@ -217,7 +241,9 @@ sw $16, -4552($8)
 
 #arma 
 #contorno
+#colisao
 sw $14, -6052($8)
+#################
 sw $14, -5544($8)
 sw $14, -6056($8)
 sw $14, -6568($8)
@@ -227,6 +253,7 @@ sw $14, -7088($8)
 sw $14, -7092($8)
 sw $14, -7096($8)
 sw $14, -7100($8)
+
 #detalhe
 sw $14, -7612($8)
 sw $14, -7616($8)
@@ -282,9 +309,35 @@ sw $23, -4540($8)
 sw $23, -4544($8)
 sw $23, -4028($8)
 sw $23, -4032($8)
+
+
+
+	addi $sp, $sp, 4
+	lw $23, 0($sp) #stack point 29 - salva o reg 8 na pilha
+	
+	addi $sp, $sp, 4
+	lw $22, 0($sp) #stack point 29 - salva o reg 9 na pilha
+	
+	addi $sp, $sp, 4
+	lw $17, 0($sp) #stack point 29 - salva o reg 10 na pilha
+	
+	addi $sp, $sp, 4
+	lw $16, 0($sp) #stack point 29 - salva o reg 11 na pilha
+	
+	addi $sp, $sp, 4
+	lw $15, 0($sp) #stack point 29 - salva o reg 12 na pilha
+	
+	addi $sp, $sp, 4
+	lw $14, 0($sp) #stack point 29 - salva o reg 13 na pilha
+	
+	addi $sp, $sp, 4
+        lw $31, 0($sp) #stack point 29 - salva o reg 31 na pilha
+	
+	
 jr $31
 
 forRestaurar2:
+
 	sw $31, 0($sp) #stack point 29 - salva o reg 31 na pilha
 	addi $sp, $sp, -4
 	sw $8, 0($sp) #stack point 29 - salva o reg 8 na pilha
@@ -305,18 +358,23 @@ forRestaurar2:
 	addi $sp, $sp, -4
 	sw $21, 0($sp) #stack point 29 - salva o reg 21 na pilha
 	addi $sp, $sp, -4
-#Essas instruÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âµes salvam os registradores 8, 9, 10, 11, 12, 13, 14, 15, 21 e 31 na pilha. O ponteiro da pilha ($sp) ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© decrementado para armazenar cada registrador.
-	
+
+
+
 	lui $8, 0x1001
 	add $8, $8, $4 #$4 canto inferior esq do npc # Adiciona o valor de $4 a $8 para definir a posiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o inicial
 	
+	addi $8, $8, -12
+	
 	lui $9 0x1001 #copia
+	addi $9, $9, -12
+	
 	add $9, $9, $4 # Adiciona o valor de $4 a $9 para definir a posiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o inicial da cÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³pia
 	addi $9, $9, 32768# Adiciona um offset de 32768 a $9
-	
-	addi $10, $0, 40 #linhas a serem copiadas
+
+	addi $10, $0, 18 #linhas a serem copiadas
 	addi $11, $0, 0 #contador das linhas - pra cima 
-	addi $12, $0, 24 #numero de pixels para copiar em cada linha
+	addi $12, $0, 27 #numero de pixels para copiar em cada linha
 	addi $13, $0, 0 #contador de pixels - para o lado
 	
 forColuna2: #percorre as linhas, copiando colunas de pixels de uma regiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o de memÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ria para outra.
@@ -346,6 +404,8 @@ prxColuna2: #Ajusta os endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢
 	
 	j forColuna2
 retornoRest2: #Essas instruÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âµes restauram os registradores da pilha e retornam ao endereÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o salvo em $31.
+	
+	
 	add $sp, $sp, 4
 	lw $21, 0($sp)
 	
